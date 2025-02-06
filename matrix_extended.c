@@ -7,80 +7,71 @@ int input_in_matrix(int *arr);
 int input_size(int *size);
 int input(int *a, int cols, int rows);
 void output(int *a, int cols, int rows);
-void max(int *a, int cols, int rows);
-void min(int *a, int cols, int rows);
+void max(int const *a, int cols, int rows);
+void min(int const *a, int cols, int rows);
 
-int main()
-{
+int main() {
     int error = 0;
     int arr[2] = {0, 0};
     int matrix_view = number_of_matrix_view();
-    if (matrix_view == 1)
-    {
+    if (matrix_view == 1) {
         for (int i = 0; i < 2; i++) {
             if (!scanf("%d", &arr[i]) || (arr[i] <= 0) || (arr[i] > 100)) {
                 error = -1;
             }
-            if (arr[0] == 0 || arr[1] == 0)
-            {
+            if (arr[0] == 0 || arr[1] == 0) {
                 error = -1;
             }
         }
         int matrix[arr[0] * arr[1]];
-        error = input(matrix, arr[0], arr[1]);
-        if (error != -1)
-        {
+        int error1 = input(matrix, arr[0], arr[1]);
+        if (error1 != -1) {
             output(matrix, arr[0], arr[1]);
             max(matrix, arr[0], arr[1]);
             min(matrix, arr[0], arr[1]);
         }
-    }
-    else if (matrix_view == 2)
-    {
-        error = input_in_matrix(arr);
-        int *matrix = (int*)malloc(arr[0] * arr[1] * sizeof(int));
-        error = input(matrix, arr[0], arr[1]);
-        if (error != -1)
-        {
+    } else if (matrix_view == 2) {
+        int error2 = input_in_matrix(arr);
+        int *matrix = (int *)malloc(arr[0] * arr[1] * sizeof(int));
+        int error3 = input(matrix, arr[0], arr[1]);
+        if (error2 != -1 || error3 != -1) {
             output(matrix, arr[0], arr[1]);
             max(matrix, arr[0], arr[1]);
             min(matrix, arr[0], arr[1]);
+        } else {
+            printf("n/a");
         }
-    }
-    else if (matrix_view == 3)
-    {
-        error = input_in_matrix(arr);
+    } else if (matrix_view == 3) {
+        int error4 = input_in_matrix(arr);
         int *matrix = calloc(arr[0] * arr[1], sizeof(int));
-        error = input(matrix, arr[0], arr[1]);
-        if (error != -1)
-        {
+        int error5 = input(matrix, arr[0], arr[1]);
+        if (error4 != -1 || error5 != -1) {
             output(matrix, arr[0], arr[1]);
             max(matrix, arr[0], arr[1]);
             min(matrix, arr[0], arr[1]);
+        } else {
+            printf("n/a");
         }
-    }
-    else if (matrix_view == 4)
-    {
-        error = input_in_matrix(arr);
-        int *matrix_first = (int*)malloc(sizeof(int));
+    } else if (matrix_view == 4) {
+        int error6 = input_in_matrix(arr);
+        int *matrix_first = (int *)malloc(sizeof(int));
         int *matrix = realloc(matrix_first, arr[0] * arr[1] * sizeof(int));
-        error = input(matrix, arr[0], arr[1]);
-        if (error != -1)
-        {
+        int error7 = input(matrix, arr[0], arr[1]);
+        if (error6 != -1 || error7 != -1) {
             output(matrix, arr[0], arr[1]);
             max(matrix, arr[0], arr[1]);
             min(matrix, arr[0], arr[1]);
+        } else {
+            printf("n/a");
         }
     }
-    if (error == -1)
-    {
+    if (error == -1) {
         printf("n/a");
     }
     return 0;
 }
 
-int number_of_matrix_view()
-{
+int number_of_matrix_view() {
     int view = 0;
     if (!scanf("%d", &view) || (view <= 0) || (view > 4)) {
         view = -1;
@@ -88,69 +79,53 @@ int number_of_matrix_view()
     return view;
 }
 
-int input_in_matrix(int *a)
-{
+int input_in_matrix(int *a) {
     int error = 0;
     for (int i = 0; i < 2; i++) {
         if (!scanf("%d", &a[i])) {
             error = -1;
         }
     }
-    if (a[0] == 0 || a[1] == 0)
-    {
+    if (a[0] == 0 || a[1] == 0) {
         error = -1;
     }
     return error;
 }
 
-int input(int *a, int cols, int rows)
-{
+int input(int *a, int cols, int rows) {
     int error = 0;
-    for (int i = 0; i < cols * rows; i++)
-    {
-        if (!scanf("%d", &a[i]))
-        {
+    for (int i = 0; i < cols * rows; i++) {
+        if (!scanf("%d", &a[i])) {
             error = -1;
         }
     }
     return error;
 }
 
-void output(int *a, int cols, int rows)
-{
+void output(int *a, int cols, int rows) {
     int count = 0;
-    for (int i = 0; i < (cols * rows); i++)
-    {
-        if (count == rows - 1)
-        {
+    for (int i = 0; i < (cols * rows); i++) {
+        if (count == rows - 1) {
             printf("%d", a[i]);
             printf("\n");
             count = 0;
-        }
-        else
-        {
+        } else {
             printf("%d ", a[i]);
             count++;
         }
     }
 }
 
-void max(int *a, int cols, int rows)
-{
+void max(int const *a, int cols, int rows) {
     int count = 0;
     int maximum_in_string = a[0];
-    for (int i = 0; i < cols * rows; i++)
-    {
-        if (count < rows)
-        {
-            if (a[i] > maximum_in_string)
-            {
+    for (int i = 0; i < cols * rows; i++) {
+        if (count < rows) {
+            if (a[i] > maximum_in_string) {
                 maximum_in_string = a[i];
             }
             count++;
-        }
-        else
-        {
+        } else {
             printf("%d ", maximum_in_string);
             maximum_in_string = a[i];
             count = 1;
@@ -160,34 +135,25 @@ void max(int *a, int cols, int rows)
     printf("\n");
 }
 
-void min(int *a, int cols, int rows)
-{
+void min(int const *a, int cols, int rows) {
     int min[cols], count = 0;
-    for (int i = 0; i < cols; i++)
-    {
+    for (int i = 0; i < cols; i++) {
         min[i] = a[i];
     }
-    for (int j = cols; j < cols * rows; j++)
-    {
-        if (count < cols)
-        {
-            if (a[j] < min[count])
-            {
+    for (int j = cols; j < cols * rows; j++) {
+        if (count < cols) {
+            if (a[j] < min[count]) {
                 min[count] = a[j];
             }
             count++;
-        }
-        else
-        {
+        } else {
             count = 0;
-            if (a[j] < min[count])
-            {
+            if (a[j] < min[count]) {
                 min[count] = a[j];
             }
         }
     }
-    for (int k = 0; k < cols - 1; k++)
-    {
+    for (int k = 0; k < cols - 1; k++) {
         printf("%d ", min[k]);
     }
     printf("%d", min[cols - 1]);
