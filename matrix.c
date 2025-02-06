@@ -143,5 +143,6 @@ int output(int *a, int cols, int rows)
             count++;
         }
     }
+    free((int *)a);
     return 0;
 }
